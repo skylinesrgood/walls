@@ -1,0 +1,326 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+
+    font-family:
+    Inter,
+    Segoe UI,
+    Arial,
+    sans-serif;
+
+    background:#000;
+    color:white;
+}
+
+#background{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* =====================
+   MENU
+===================== */
+
+#menuScreen{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:center;
+    align-items:center;
+
+    gap:30px;
+}
+
+.logo{
+    font-size:72px;
+    font-weight:900;
+    letter-spacing:8px;
+
+    color:#4fffd8;
+
+    text-shadow:
+    0 0 10px rgba(79,255,216,.6),
+    0 0 25px rgba(79,255,216,.4);
+}
+
+.menuCard{
+    display:flex;
+    flex-direction:column;
+
+    gap:15px;
+
+    width:320px;
+}
+
+.menuButton{
+    height:60px;
+
+    border:none;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    font-size:18px;
+    font-weight:700;
+
+    color:white;
+
+    background:
+    rgba(20,20,20,.85);
+
+    transition:
+    transform .15s,
+    box-shadow .15s,
+    background .15s;
+}
+
+.menuButton:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 0 18px rgba(79,255,216,.35);
+
+    background:
+    rgba(35,35,35,.95);
+}
+
+.bossButton{
+    border:2px solid #ff6161;
+}
+
+.bossButton:hover{
+    box-shadow:
+    0 0 20px rgba(255,97,97,.45);
+}
+
+/* =====================
+   GAME
+===================== */
+
+#gameScreen{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    flex-direction:column;
+}
+
+#topBar{
+    height:90px;
+
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    padding:0 30px;
+
+    background:
+    rgba(0,0,0,.35);
+
+    backdrop-filter:blur(8px);
+}
+
+.playerInfo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.playerTitle{
+    font-weight:700;
+    font-size:18px;
+}
+
+.playerDot{
+    width:20px;
+    height:20px;
+
+    border-radius:50%;
+}
+
+.cyan{
+    background:#4fffd8;
+
+    box-shadow:
+    0 0 12px #4fffd8;
+}
+
+.red{
+    background:#ff6d6d;
+
+    box-shadow:
+    0 0 12px #ff6d6d;
+}
+
+#turnIndicator{
+    font-size:20px;
+    font-weight:800;
+
+    padding:12px 22px;
+
+    border-radius:12px;
+
+    background:
+    rgba(25,25,25,.85);
+}
+
+#boardContainer{
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+}
+
+#board{
+    width:min(88vw,88vh);
+    height:min(88vw,88vh);
+
+    border-radius:14px;
+
+    background:
+    rgba(8,8,8,.92);
+
+    box-shadow:
+    0 0 30px rgba(0,0,0,.5);
+}
+
+#bottomBar{
+    height:90px;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    gap:20px;
+}
+
+#bottomBar button{
+    width:180px;
+    height:52px;
+
+    border:none;
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:16px;
+    font-weight:700;
+
+    color:white;
+
+    background:
+    rgba(20,20,20,.92);
+
+    transition:.15s;
+}
+
+#bottomBar button:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 0 18px rgba(79,255,216,.25);
+}
+
+/* =====================
+   WIN SCREEN
+===================== */
+
+#winScreen{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    background:
+    rgba(0,0,0,.65);
+
+    backdrop-filter:blur(10px);
+}
+
+.winCard{
+    width:400px;
+
+    padding:35px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    background:
+    rgba(15,15,15,.95);
+}
+
+#winnerText{
+    margin-bottom:25px;
+
+    font-size:34px;
+}
+
+.winCard button{
+    width:100%;
+    height:55px;
+
+    margin-top:12px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:16px;
+    font-weight:700;
+
+    color:white;
+
+    background:
+    rgba(30,30,30,.95);
+}
+
+/* =====================
+   MOBILE
+===================== */
+
+@media (max-width:700px){
+
+    .logo{
+        font-size:48px;
+    }
+
+    #topBar{
+        padding:10px;
+        gap:10px;
+    }
+
+    #turnIndicator{
+        font-size:15px;
+    }
+
+    .playerTitle{
+        font-size:14px;
+    }
+}
