@@ -424,3 +424,233 @@ function roundRect(
     ctx.fill();
 
 }
+
+/* =========================
+   WALL SYSTEM V1
+========================= */
+
+let wallMode = false;
+
+let wallDirection = "horizontal";
+
+document.addEventListener("keydown", e => {
+
+    if(e.key.toLowerCase() === "w"){
+
+        wallMode = !wallMode;
+
+        draw();
+
+    }
+
+    if(e.key.toLowerCase() === "r"){
+
+        wallDirection =
+        wallDirection === "horizontal"
+        ? "vertical"
+        : "horizontal";
+
+        draw();
+
+    }
+
+});
+
+/* =========================
+   CLICK OVERRIDE
+========================= */
+
+const oldHandleClick =
+handleClick;
+
+handleClick = function(e){
+
+    if(gameOver) return;
+
+    const rect =
+    canvas.getBoundingClientRect();
+
+    const tile =
+    canvas.width / BOARD_SIZE;
+
+    const x =
+    Math.floor(
+        (e.clientX - rect.left) / tile
+    );
+
+    const y =
+    Math.floor(
+        (e.clientY - rect.top) / tile
+    );
+
+    if(wallMode){
+
+        attemptWallPlacement(x,y);
+
+        return;
+
+    }
+
+    attemptMove(x,y);
+
+};
+
+/* =========================
+   WALL PLACEMENT
+========================= */
+
+function attemptWallPlacement(x,y){
+
+    const player =
+    currentPlayer === 1
+    ? game.p1
+    : game.p2;
+
+    if(player.walls <= 0){
+
+        return;
+
+    }
+
+    if(wallDirection === "horizontal"){
+
+        if(hasHorizontalWall(x,y))
+            return;
+
+        game.horizontalWalls.push({
+
+            x,
+            y
+
+        });
+
+    }
+    else{
+
+        if(hasVerticalWall(x,y))
+            return;
+
+        game.verticalWalls.push({
+
+            x,
+            y
+
+        });
+
+    }
+
+    player.walls--;
+
+    updateUI();
+
+    draw();
+
+    endTurn();
+
+}
+
+/* =========================
+   WALL LOOKUPS
+========================= */
+
+function hasHorizontalWall(x,y){
+
+    return game.horizontalWalls.some(
+
+        wall =>
+
+        wall.x === x &&
+        wall.y === y
+
+    );
+
+}
+
+function hasVerticalWall(x,y){
+
+    return game.verticalWalls.some(
+
+        wall =>
+
+        wall.x === x &&
+        wall.y === y
+
+    );
+
+}
+
+/* =========================
+   PREVIEW
+========================= */
+
+const oldDraw =
+draw;
+
+draw = function(){
+
+    oldDraw();
+
+    drawWallPreview();
+
+};
+
+function drawWallPreview(){
+
+    if(
+        !wallMode ||
+        !hoveredCell
+    ){
+        return;
+    }
+
+    const tile =
+    canvas.width / BOARD_SIZE;
+
+    ctx.strokeStyle =
+    "rgba(255,255,255,.5)";
+
+    ctx.lineWidth =
+    tile * 0.14;
+
+    ctx.lineCap =
+    "round";
+
+    if(
+        wallDirection ===
+        "horizontal"
+    ){
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            hoveredCell.x * tile + tile,
+            hoveredCell.y * tile + tile
+        );
+
+        ctx.lineTo(
+            hoveredCell.x * tile + tile*3,
+            hoveredCell.y * tile + tile
+        );
+
+        ctx.stroke();
+
+    }
+    else{
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            hoveredCell.x * tile + tile,
+            hoveredCell.y * tile + tile
+        );
+
+        ctx.lineTo(
+            hoveredCell.x * tile + tile,
+            hoveredCell.y * tile + tile*3
+        );
+
+        ctx.stroke();
+
+    }
+
+}
